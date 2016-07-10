@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title>Liisa & Matias</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/lodash/4.13.1/lodash.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+      $(window).load(function() {
+
+          function insertImages(images) {
+              var html = "";
+              $.each(images, function(index, value) {
+                  var imageItem = '<div class="col-xs-2"><img width="200" height="200" src="' + "http://192.168.1.100:10010/images/" + value + ".jpg" + '"/></div>';
+                  html += imageItem;
+              });
+              $("#image-container").prepend(html);
+          }
+
+          function getImagesFromApi() {
+              $.get('http://192.168.1.100:10010/api/images', function(data) {
+                  insertImages(_.shuffle(data));
+              });
+          }
+
+          getImagesFromApi();
+
+      });
+  </script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h1>Liisa & Matias 16.7.2016</h1>
+        </div>
+        <div id="image-container" class="row"></div>
+    </div>
+</body>
+</html>

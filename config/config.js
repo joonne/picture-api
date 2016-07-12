@@ -4,7 +4,7 @@
 
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/..');
-const port = 10010;
+const port = 5900;
 const server_ip_address = '127.0.0.1';
 const name = 'picture-api';
 

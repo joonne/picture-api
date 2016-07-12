@@ -10,24 +10,24 @@
   <script type="text/javascript">
       $(window).load(function() {
 
-          var socket = io.connect('http://127.0.0.1:10010');
+          var socket = io.connect('http://127.0.0.1:5900');
           socket.on('image', function (data) {
-            var imageItem = '<div class="col-sm-2"><img width="350" height="197" src="' + "http://192.168.1.100:10010/images/" + data.filename + ".jpg" + '"/></div>';
-            $("#image-container").prepend(imageItem);
+              var imageItem = '<div class="col-sm-2"><img width="350" height="197" src="' + "http://192.168.1.100:5900/images/" + data.filename + ".jpg" + '"/></div>';
+              $("#image-container").prepend(imageItem);
           });
 
           function insertImages(images) {
               $("#image-container").empty();
               var html = "";
               $.each(images, function(index, value) {
-                  var imageItem = '<div class="col-sm-2"><img width="350" height="197" src="' + "http://192.168.1.100:10010/images/" + value + ".jpg" + '"/></div>';
+                  var imageItem = '<div class="col-sm-2"><img width="350" height="197" src="' + "http://192.168.1.100:5900/images/" + value + ".jpg" + '"/></div>';
                   html += imageItem;
               });
               $("#image-container").prepend(html);
           }
 
           function getImagesFromApi() {
-              $.get('http://192.168.1.100:10010/api/images', function(data) {
+              $.get('http://192.168.1.100:5900/api/images', function(data) {
                   insertImages(_.shuffle(data));
               });
           }

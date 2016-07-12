@@ -12,14 +12,15 @@
 
           var socket = io.connect('http://127.0.0.1:10010');
           socket.on('image', function (data) {
-            var imageItem = '<div class="col-xs-2"><img width="200" height="200" src="' + "http://192.168.1.100:10010/images/" + data.filename + ".jpg" + '"/></div>';
+            var imageItem = '<div class="col-sm-2"><img width="350" height="197" src="' + "http://192.168.1.100:10010/images/" + data.filename + ".jpg" + '"/></div>';
             $("#image-container").prepend(imageItem);
           });
 
           function insertImages(images) {
+              $("#image-container").empty();
               var html = "";
               $.each(images, function(index, value) {
-                  var imageItem = '<div class="col-xs-2"><img width="200" height="200" src="' + "http://192.168.1.100:10010/images/" + value + ".jpg" + '"/></div>';
+                  var imageItem = '<div class="col-sm-2"><img width="350" height="197" src="' + "http://192.168.1.100:10010/images/" + value + ".jpg" + '"/></div>';
                   html += imageItem;
               });
               $("#image-container").prepend(html);
@@ -32,6 +33,8 @@
           }
 
           getImagesFromApi();
+
+          setInterval(getImagesFromApi, 300000);
 
       });
   </script>

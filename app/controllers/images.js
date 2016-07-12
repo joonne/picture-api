@@ -33,7 +33,7 @@ module.exports = (app, io) => {
             const file = req.file.filename;
             const filename = file.substr(0, file.length - 4);
             io.emit('image', { filename });
-            return res.redirect('http://127.0.0.1:10010');
+            return res.redirect('http://192.168.1.100:10010');
         }
         return res.status(500);
     });

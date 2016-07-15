@@ -5,19 +5,28 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="stylesheet" href="style.css">
+  <script>
+  document.ontouchmove = function(e) {e.preventDefault()};
+  </script>
 </head>
 <body>
     <div class="container-fluid">
         <div class="page-header">
-            <h1>Liisa & Matias</h1>
+          <p class="header-text"><b>Liisa & Matias</b></p>
         </div>
-        <p>Ota kuva ja lähetä se valkokankaalle!</p>
+        <p style="text-align:center;">Ota kuva ja lähetä se valkokankaalle!</p>
         <div class="row">
             <div class="col-xs-12">
                 <form method="post" enctype="multipart/form-data" action="api/images">
-                    <input type="file" accept="image/*" name="photo">
-                    <input type="submit">
+                    <input id="photo" type="file" accept="image/*" name="photo" onchange="this.form.submit();">
+                    <!--<input type="submit">-->
+
                 </form>
+                <div id="button" onclick="document.getElementById('photo').click();"><img width="40px" height="40px" src="cam.png"></img> Kosketa kuvataksesi</div>
             </div>
         </div>
     </div>

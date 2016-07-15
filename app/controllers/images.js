@@ -5,7 +5,7 @@
 const multer = require('multer');
 const glob = require('glob');
 const config = require('../../config/config');
-const ExifImage = require('exif').ExifImage;
+const exif = require('fast-exif');
 
 const storage = multer.diskStorage({
     destination: 'public/images/',
@@ -16,26 +16,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const getOrientation = (filename) => {
-    try {
-        new ExifImage({ image : __dirname + '/../../public/images/' + filename }, function (error, exifData) {
-            if (error) {
-                console.log('Error: ' + error.message);
-            } else {
-                console.log(exifData.image.Orientation);
-                return exifData.image.Orientation;
-            }
-        });
-    } catch (error) {
-        console.log('Error: ' + error.message);
-        return 0;
-    }
-}
-
 module.exports = (app, io) => {
-
     app.get('/api/images', (req, res) => {
-
         const images = glob.sync(__dirname + '/../../public/images/*')
             .map(image => {
                 let start = image.lastIndexOf('/') + 1;
@@ -49,10 +31,8 @@ module.exports = (app, io) => {
         if (req.file) {
             const file = req.file.filename;
             const filename = file.substr(0, file.length - 4);
-            const orientation = getOrientation(req.file.filename);
-            console.log(orientation);
-            io.emit('image', { filename, orientation });
-            return res.redirect('http://192.168.1.100:10010');
+            io.emit('image', { filename });
+            return res.redirect('http://192.168.1.100:5900');
         }
         return res.status(500);
     });

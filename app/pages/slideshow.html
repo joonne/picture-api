@@ -7,34 +7,42 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="style.css">
   <script type="text/javascript">
       $(window).load(function() {
 
+          var images = [];
+          var newImages = [];
+
+          var width = screen.width * 0.90;
+          var height = (width / 16) * 9;
+
           var socket = io.connect('http://127.0.0.1:5900');
           socket.on('image', function (data) {
-              var imageItem = '<div class="col-sm-2"><img width="350" height="197" src="' + "http://192.168.1.100:5900/images/" + data.filename + ".jpg" + '"/></div>';
-              $("#image-container").prepend(imageItem);
+              newImages.push(data.filename);
+              if (images.length === 0) {
+                  images.push(data.filename);
+              }
           });
 
-          function insertImages(images) {
+          function changeImage() {
               $("#image-container").empty();
-              var html = "";
-              $.each(images, function(index, value) {
-                  var imageItem = '<div class="col-sm-2"><img width="350" height="197" src="' + "http://192.168.1.100:5900/images/" + value + ".jpg" + '"/></div>';
-                  html += imageItem;
-              });
+              var image = newImages.length > 0 ? newImages.shift() : _.head(_.shuffle(images));
+              var src = image ? "http://192.168.1.100:5900/images/" + image + ".jpg" : "http://placehold.it/1920x1080";
+              var html = '<div class="col-lg-12"><img class="img-responsive center-block" width="' + width + '" height="' + height + '" src="' + src + '"/></div>';
               $("#image-container").prepend(html);
           }
 
           function getImagesFromApi() {
               $.get('http://192.168.1.100:5900/api/images', function(data) {
-                  insertImages(_.shuffle(data));
+                images = data;
+                changeImage();
               });
           }
 
           getImagesFromApi();
-
-          setInterval(getImagesFromApi, 300000);
+          setInterval(changeImage, 15000);
+          setInterval(getImagesFromApi, 600000);
 
       });
   </script>
@@ -42,7 +50,7 @@
 <body>
     <div class="container-fluid">
         <div class="page-header">
-            <h1>Liisa & Matias 16.7.2016</h1>
+            <h1 class="header-text"><b>Liisa & Matias</b></h1>
         </div>
         <div id="image-container" class="row"></div>
     </div>

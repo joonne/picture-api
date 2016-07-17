@@ -5,7 +5,6 @@
 const multer = require('multer');
 const glob = require('glob');
 const config = require('../../config/config');
-const exif = require('fast-exif');
 
 const storage = multer.diskStorage({
     destination: 'public/images/',
@@ -32,7 +31,7 @@ module.exports = (app, io) => {
             const file = req.file.filename;
             const filename = file.substr(0, file.length - 4);
             io.emit('image', { filename });
-            return res.redirect('http://192.168.1.100:5900');
+            return res.redirect('http://192.168.1.100:10010');
         }
         return res.status(500);
     });

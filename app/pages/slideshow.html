@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Liisa & Matias</title>
+  <title></title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/lodash/4.13.1/lodash.min.js"></script>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
@@ -17,7 +17,7 @@
           var width = screen.width * 0.90;
           var height = (width / 16) * 9;
 
-          var socket = io.connect('http://127.0.0.1:5900');
+          var socket = io.connect('http://127.0.0.1:10010');
           socket.on('image', function (data) {
               newImages.push(data.filename);
               if (images.length === 0) {
@@ -28,13 +28,13 @@
           function changeImage() {
               $("#image-container").empty();
               var image = newImages.length > 0 ? newImages.shift() : _.head(_.shuffle(images));
-              var src = image ? "http://192.168.1.100:5900/images/" + image + ".jpg" : "http://placehold.it/1920x1080";
+              var src = image ? "http://192.168.1.100:10010/images/" + image + ".jpg" : "http://placehold.it/1920x1080";
               var html = '<div class="col-lg-12"><img class="img-responsive center-block" width="' + width + '" height="' + height + '" src="' + src + '"/></div>';
               $("#image-container").prepend(html);
           }
 
           function getImagesFromApi() {
-              $.get('http://192.168.1.100:5900/api/images', function(data) {
+              $.get('http://192.168.1.100:10010/api/images', function(data) {
                 images = data;
                 changeImage();
               });
@@ -50,7 +50,7 @@
 <body>
     <div class="container-fluid">
         <div class="page-header">
-            <h1 class="header-text"><b>Liisa & Matias</b></h1>
+            <h1 class="header-text"><b>Tapahtuman nimi</b></h1>
         </div>
         <div id="image-container" class="row"></div>
     </div>

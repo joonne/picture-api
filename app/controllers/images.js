@@ -5,6 +5,7 @@
 const multer = require('multer');
 const glob = require('glob');
 const config = require('../../config/config');
+const { processImage } = require('../services/image.service');
 
 const storage = multer.diskStorage({
     destination: 'public/images/',

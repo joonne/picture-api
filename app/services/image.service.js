@@ -2,13 +2,13 @@ const fs = require('fs');
 const exif = require('exif-parser');
 const lwip = require('lwip');
 
-const processImage = (filename) => {
+const processImage = (path) => {
     // path is the path to your image
     fs.readFile(path, (err, data) => {
         if (err) throw err;
         let exifData = false;
         // ext is the extension of the image
-        if (ext == "jpg") {
+        if (ext === 'jpg') {
             exifData = exif.create(data).parse();
         }
         lwip.open(data, ext, (err, image) => {
